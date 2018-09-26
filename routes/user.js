@@ -1,4 +1,7 @@
 const User = require('../models/user')
+const Folder = require('../models/folder')
+const Project = require('../models/project')
+
 const config = require('../config')
 const jwt = require('jwt-simple')
 
@@ -7,7 +10,9 @@ exports.get = async (req, res) => {
   if (req.headers && req.headers.authorization) {
     const decoded = jwt.decode(req.headers.authorization, config.secret)
     const user = await User.findById(decoded.sub)
-    res.send(user)
+    const folders = await Folder.find({ _uid: decoded.sub })
+    const projects = await Project.find({ _uid: decoded.sub }, { name: 1, description: 1, links: 1, folder: 1 })
+    res.send({ user, folders, projects })
   }
   return res.status(400).send({ error: 'authorization header is missing'})
 }

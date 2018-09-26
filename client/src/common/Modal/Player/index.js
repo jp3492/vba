@@ -7,7 +7,7 @@ class Modal extends Component {
 
   render(){
     return (
-      <div id="modalBackground">
+      <div id="modalBackground" onClick={ e => e.stopPropagation()}>
         <div id="modalContainer">
 
         </div>

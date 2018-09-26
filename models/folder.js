@@ -15,7 +15,8 @@ const folderSchema = new Schema({
   }],
   folder: {
     type: Schema.Types.ObjectId,
-    ref: 'folder'
+    ref: 'folder',
+    default: null
   }
 }, { timestamps: true });
 
